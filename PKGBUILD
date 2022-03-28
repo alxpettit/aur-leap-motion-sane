@@ -1,16 +1,21 @@
 # Submitter: M0Rf30 <morfeo89 [at] hotmail [dot] it>
-# Maintainer: Rigo Reddig <rigo.reddig [at] gmail [dot] com>
+# Maintainer: Alexandria P. <alxpettit@gmail.com>
+# Contributer: Rigo Reddig <rigo.reddig [at] gmail [dot] com>
 # Contributor: Eric Engestrom <aur [at] engestrom [dot] ch>
 # Contributor: Leslie Zhai <xiang.zhai [at] i-soft [dot] com [dot] cn>
 
-
-pkgbase=leap-motion
+pkgbase=leap-motion-sane
+_pkgbase=leap-motion
 pkgname=('leap-motion-driver' 'leap-motion-sdk')
 _major=2.3.1
 _build=31549
+
+_uid=24160
+_gid=24160
+
 pkgver=${_major}
-pkgrel=7
-pkgdesc="The Leap Motion Developer SDK"
+pkgrel=8
+pkgdesc="The Leap Motion Developer SDK - sane version that does not run as root"
 arch=('i686' 'x86_64')
 url="https://developer.leapmotion.com/downloads"
 license=('custom')
@@ -18,8 +23,8 @@ source=(Leap_Motion_SDK_Linux_${_major}.tgz.tgz::http://warehouse.leapmotion.com
 	libleap.pc
 	LICENSE
     	leapd.service
-    	$pkgbase.desktop
-    	$pkgbase.png)
+    	$_pkgbase.desktop
+    	$_pkgbase.png)
 
 package_leap-motion-sdk() {
 
@@ -56,12 +61,13 @@ package_leap-motion-sdk() {
   install -D -m644 "${srcdir}"/libleap.pc "${pkgdir}/usr/lib/pkgconfig/libleap.pc"
   # Copy license
   install -D -m644 "${srcdir}"/LICENSE "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
+
 }
 
 package_leap-motion-driver() {
 	depends=('mesa' 'libxxf86vm')
 	makedeps=('xz' 'tar')
-	install=$pkgbase-driver.install
+	install=$_pkgbase-driver.install
 
   cd ${srcdir}/LeapDeveloperKit_${_major}+${_build}_linux
 
@@ -97,16 +103,16 @@ package_leap-motion-driver() {
   install -D -m644 "${srcdir}"/LICENSE "${pkgdir}/usr/share/licenses/${pkgname}/LICENSE"
 
 # Install desktop file
-	install -Dm644 "${srcdir}/$pkgbase.desktop" "${pkgdir}/usr/share/applications/$pkgbase.desktop"
+	install -Dm644 "${srcdir}/$_pkgbase.desktop" "${pkgdir}/usr/share/applications/$_pkgbase.desktop"
 
 	for i in 16x16 22x22 24x24 32x32 48x48 256x256; do
-		install -Dm 0644 "$srcdir/$pkgbase.png" "$pkgdir/usr/share/icons/hicolor/$i/apps/$pkgbase.png"
+		install -Dm 0644 "$srcdir/$_pkgbase.png" "$pkgdir/usr/share/icons/hicolor/$i/apps/$_pkgbase.png"
 	done
 }
 
 md5sums=('d9facdfed290823d3a5358ca5077e883'
          'c43a3a834f646efc8f033f75eb80cc7e'
          '78a4f0934b105397d1f7b17d06e4717c'
-         '9702d3ac509377a6f56b140ed32b2a63'
+         'fe1e7177b85d2093501efc25823d8b53'
          '0261f47c2d5090681446f6917b1858ba'
          '5b85d03f4109203c5f7ecd610a33136d')

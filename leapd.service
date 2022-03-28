@@ -2,8 +2,9 @@
 Description=Leap Motion Service Daemon
 
 [Service]
-PIDFile=/var/run/leapd.pid
-ExecStart=/usr/bin/leapd
+User=leapd
+PIDFile=/var/run/leapd/leapd.pid
+ExecStart=/usr/bin/leapd --metrics_enabled=0
 KillSignal=SIGKILL
 TimeoutStopSec=5
 KillMode=process

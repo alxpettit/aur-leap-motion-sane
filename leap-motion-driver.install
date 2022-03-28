@@ -1,8 +1,21 @@
+_uid=24160
+_gid=${_uid}
+
+
 post_install(){
+  groupadd -g ${_gid} leapd || true
+  useradd -u ${_uid} -g ${_gid} leapd || true
+  mkdir -p "/var/run/leapd"
+  chown "${_uid}:${_gid}" "/var/run/leapd"
+  mkdir -p "/etc/leapd"
+  chown root:${_gid} "/etc/leapd"
+  mkdir -p "/srv/leapd"
+  chown ${_uid}${_gid} "/srv/leapd"
+  usermod -aG plugdev leapd
   echo 'If not a member of a plugdev group, add yourself with the command:'
   echo '  sudo usermod -a -G plugdev $USER'
   echo 'Start the daemon by running:'
-  echo '  systemctl start leapd.service'
+  echo 'sudo systemctl start leapd.service'
   echo 'And start the GUI using:'
   echo '  LeapControlPanel'
 }
